@@ -1,0 +1,34 @@
+﻿@page "/todo"
+@attribute [RenderModeInteractiveServer]
+
+<PageTitle>Todo List</PageTitle>
+
+<h3>Todo List</h3>
+
+<p role="status">Todo List: @currentCount</p>
+
+<input type="text" @bind="newItemText" />
+<button class="btn btn-primary" @onclick="AddItemToList">Add Item</button>
+
+<ul>
+    @foreach (var item in items)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+@code {
+    private int currentCount = 0;
+    private List<string> items = new List<string>();
+    private string newItemText;
+
+    private void AddItemToList()
+    {
+        items.Add(newItemText);
+        newItemText = "";
+
+        currentCount++;
+    }
+
+}
+

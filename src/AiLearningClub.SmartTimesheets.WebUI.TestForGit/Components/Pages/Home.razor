@@ -5,3 +5,41 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<br />
+<br />
+
+@* <form method="get" action="/Search">
+    <input type="text" name="query" placeholder="Search...">
+    <button type="submit">Search</button>
+</form> *@
+
+<h3>Search</h3>
+<input @bind="searchQuery" placeholder="Enter your search query" />
+<button @onclick="Search">Search</button>
+
+<div>
+    @foreach (var result in searchResults)
+    {
+        <p>@result</p>
+    }
+</div>
+
+@code {
+    private string searchQuery;
+    private List<string> searchResults = new List<string>();
+
+    private void Search()
+    {
+        searchResults.Add(searchQuery);
+    }
+}
+
+
+
+
+
+
+
+
+

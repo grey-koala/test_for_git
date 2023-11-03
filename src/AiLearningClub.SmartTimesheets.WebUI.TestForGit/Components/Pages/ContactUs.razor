@@ -1,0 +1,67 @@
+﻿@page "/contactUs"
+@using Microsoft.AspNetCore.Mvc
+@using System.Net.Mail
+@using MimeKit
+@using System.Net
+
+
+
+@attribute [RenderModeInteractiveServer]
+@* @attribute [IgnoreAntiforgeryValidation] *@
+
+<PageTitle>Contact us</PageTitle>
+
+<h3>Contact Us</h3>
+
+
+<form method="post">
+ 
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+    </div>
+    <br />
+    @*   <input type="hidden" name="_RequestVerificationToken" value="Html.AntiForgeryToken()"> *@
+    <button type="submit" class="btn btn-primary" onclick="this.form.submit()">Submit</button>
+    
+</form>
+
+@code {
+    private string name;
+    private string email;
+    private string message;
+    
+    private async Task SendEmail()
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress("Your Name", "grey.koala@outlook.com"));
+        message.To.Add(new MailboxAddress("Recipient Name", "Katrin500@rambler.ru"));
+        message.Subject = "Subject";
+        message.Body = new TextPart("plain")
+
+        {
+            Text = "Message"
+        };
+        using (var client = new SmtpClient("smtp.office365.com", 587))
+        {
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("grey.koala@outlook.com", "%grey_koala09%");
+            client.EnableSsl = true;
+          //  await client.SendAsync(message, null);
+           // await client.ConnectAsync("smtp.office365.com", 587, false);
+           // await client.AuthenticateAsync("grey.koala@outlook.com", "%grey_koala09%");
+         //   await client.SendAsync(message);
+          //  await client.DisconnectAsync(true);
+          
+
+        }
+    }
+}
